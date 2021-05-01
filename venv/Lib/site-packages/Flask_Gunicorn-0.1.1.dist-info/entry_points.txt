@@ -1,0 +1,4 @@
+
+        [flask.commands]
+        run=flask_gunicorn:cli
+    
