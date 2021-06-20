@@ -3,23 +3,12 @@ import datetime
 import imutils
 import numpy as np
 from centroid_tracker import CentroidTracker
-from itertools import combinations
-import math
 
 protopath = "models/MobileNetSSD_deploy.prototxt"
 modelpath = "models/MobileNetSSD_deploy.caffemodel"
 
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
-# detector.setPreferableBackend(cv2.dnn.DNN_BACKEND_INFERENCE_ENGINE)
-# detector.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
-
-
-CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
-           "bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
-           "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
-           "sofa", "train", "tvmonitor"]
-
-tracker = CentroidTracker(maxDisappeared=40, maxDistance=50)
+tracker = CentroidTracker(maxDisappeared=40)
 
 
 def non_max_suppression_fast(boxes, overlapThresh):
@@ -67,13 +56,17 @@ def main():
     cap = cv2.VideoCapture('vid/LRT Pasar Seni.mp4')
 
     fps_start_time = datetime.datetime.now()
-    fps = 0
     total_frames = 0
 
     while True:
         ret, frame = cap.read()
         frame = imutils.resize(frame, width=800)
         total_frames = total_frames + 1
+
+        # If the last frame is reached, reset the capture and the frame_counter
+        if total_frames == cap.get(cv2.CAP_PROP_FRAME_COUNT):
+            total_frames = 0  # Or whatever as long as it is the same as next line
+            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
         (H, W) = frame.shape[:2]
 
@@ -82,16 +75,13 @@ def main():
         detector.setInput(blob)
         person_detections = detector.forward()
         rects = []
+
         for i in np.arange(0, person_detections.shape[2]):
             confidence = person_detections[0, 0, i, 2]
-            if confidence > 0.5:
-                idx = int(person_detections[0, 0, i, 1])
-
-                if CLASSES[idx] != "person":
-                    continue
-
+            if confidence > 0.2:
+                # idx = int(person_detections[0, 0, i, 1])
                 person_box = person_detections[0, 0, i, 3:7] * np.array([W, H, W, H])
-                (startX, startY, endX, endY) = person_box.astype("int")
+               #  (startX, startY, endX, endY) = person_box.astype("int")
                 rects.append(person_box)
 
         boundingboxes = np.array(rects)
@@ -108,28 +98,12 @@ def main():
             cX = int((x1 + x2) / 2.0)
             cY = int((y1 + y2) / 2.0)
 
-
             centroid_dict[objectId] = (cX, cY, x1, y1, x2, y2)
-
             text = "ID: {}".format(objectId)
-            cv2.putText(frame, text, (x1, y1-5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 1)
-
-        red_zone_list = []
-        for (id1, p1), (id2, p2) in combinations(centroid_dict.items(), 2):
-            dx, dy = p1[0] - p2[0], p1[1] - p2[1]
-            distance = math.sqrt(dx * dx + dy * dy)
-            if distance < 75.0:
-                if id1 not in red_zone_list:
-                    red_zone_list.append(id1)
-                if id2 not in red_zone_list:
-                    red_zone_list.append(id2)
+            cv2.putText(frame, text, (x1, y1 - 5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 1)
 
         for id, box in centroid_dict.items():
-            if id in red_zone_list:
-                cv2.rectangle(frame, (box[2], box[3]), (box[4], box[5]), (0, 0, 255), 2)
-            else:
-                cv2.rectangle(frame, (box[2], box[3]), (box[4], box[5]), (0, 255, 0), 2)
-
+            cv2.rectangle(frame, (box[2], box[3]), (box[4], box[5]), (0, 255, 0), 2)
 
         fps_end_time = datetime.datetime.now()
         time_diff = fps_end_time - fps_start_time
@@ -148,5 +122,6 @@ def main():
             break
 
     cv2.destroyAllWindows()
+
 
 main()
