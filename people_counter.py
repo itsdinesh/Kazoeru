@@ -17,19 +17,19 @@ tracker = CentroidTracker(maxDisappeared=10)
 fps_start_time = datetime.datetime.now()
 
 def main():
-    cap = cv2.VideoCapture('vid/LRT Pasar Seni.mp4')
+    cap = cv2.VideoCapture('vid/LRT Encoded V8.3.mkv')
     total_frames = 0
     object_id_list = []
     frameCount = 0
-    frameRate = 15
+    frameRate = 10
 
     while True:
-        # Capture every 15th Frame
+        # Capture every 10th Frame
         frameCount += frameRate
         cap.set(1, frameCount)
 
         ret, frame = cap.read()
-        frame = imutils.resize(frame, width=800)
+        frame = imutils.resize(frame, width=600)
 
         # If the last frame is reached, reset the capture and the frame_counter
         if frameCount == cap.get(cv2.CAP_PROP_FRAME_COUNT) - frameRate:
@@ -74,14 +74,10 @@ def main():
             #    object_id_list.append(objectId)
 
         lpc_count = len(objects)
-        #opc_count = len(object_id_list)
+        lpc_txt = "Live Person Count: {}".format(lpc_count)
         #print(lpc_count)
 
-        lpc_txt = "Live Person Count: {}".format(lpc_count)
-        #opc_txt = "OPC: {}".format(opc_count)
-
         cv2.putText(frame, lpc_txt, (5, 30), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 255), 1)
-        #cv2.putText(frame, opc_txt, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
 
         length = frameCount/30
         length = "Video Length: {:.2f}".format(length)
