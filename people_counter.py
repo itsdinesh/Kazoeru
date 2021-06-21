@@ -29,10 +29,11 @@ def main():
         cap.set(1, frameCount)
 
         ret, frame = cap.read()
-        frame = imutils.resize(frame, width=600)
-
+        frame = imutils.resize(frame, width=800)
+        print(frameCount)
         # If the last frame is reached, reset the capture and the frame_counter
-        if frameCount == cap.get(cv2.CAP_PROP_FRAME_COUNT) - frameRate:
+
+        if(frameCount + frameRate) > cap.get(cv2.CAP_PROP_FRAME_COUNT):
             frameCount = 0
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
