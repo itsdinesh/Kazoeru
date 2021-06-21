@@ -13,7 +13,7 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
            "sofa", "train", "tvmonitor"]
 
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
-tracker = CentroidTracker(maxDisappeared=15)
+tracker = CentroidTracker(maxDisappeared=10)
 fps_start_time = datetime.datetime.now()
 
 def main():
@@ -21,17 +21,18 @@ def main():
     total_frames = 0
     object_id_list = []
     frameCount = 0
+    frameRate = 15
 
     while True:
         # Capture every 15th Frame
-        frameCount += 15
+        frameCount += frameRate
         cap.set(1, frameCount)
 
         ret, frame = cap.read()
         frame = imutils.resize(frame, width=800)
 
         # If the last frame is reached, reset the capture and the frame_counter
-        if frameCount == cap.get(cv2.CAP_PROP_FRAME_COUNT) - frameCount:
+        if frameCount == cap.get(cv2.CAP_PROP_FRAME_COUNT) - frameRate:
             frameCount = 0
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
@@ -74,6 +75,7 @@ def main():
 
         lpc_count = len(objects)
         #opc_count = len(object_id_list)
+        #print(lpc_count)
 
         lpc_txt = "Live Person Count: {}".format(lpc_count)
         #opc_txt = "OPC: {}".format(opc_count)
@@ -84,6 +86,13 @@ def main():
         length = frameCount/30
         length = "Video Length: {:.2f}".format(length)
         cv2.putText(frame, length, (5, 60), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 255), 1)
+
+        if(lpc_count) > 5:
+            status = "Crowded"
+            cv2.putText(frame, status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 1)
+        else:
+            status = "Not Crowded"
+            cv2.putText(frame, status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 1)
 
         cv2.imshow("Application", frame)
         key = cv2.waitKey(1)
