@@ -22,6 +22,7 @@ def main():
     object_id_list = []
     frameCount = 0
     frameRate = 10
+    status = "N/A"
 
     while True:
         # Capture every 10th Frame
