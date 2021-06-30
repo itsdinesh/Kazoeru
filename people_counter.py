@@ -17,7 +17,6 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
 tracker = CentroidTracker(maxDisappeared=10)
 fps_start_time = datetime.datetime.now()
-frameSize = (640, 480)
 
 
 def main():
