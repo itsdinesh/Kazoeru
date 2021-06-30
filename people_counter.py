@@ -4,7 +4,6 @@ import imutils
 import numpy as np
 
 from centroid_tracker import CentroidTracker
-
 protopath = "models/MobileNetSSD_deploy.prototxt"
 modelpath = "models/MobileNetSSD_deploy.caffemodel"
 net = cv2.dnn.readNetFromCaffe(protopath, modelpath)
