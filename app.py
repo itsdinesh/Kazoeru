@@ -1,6 +1,5 @@
 from flask import Flask, render_template, Response
 from people_counter import Camera
-from waitress import serve
 
 app = Flask(__name__)
 

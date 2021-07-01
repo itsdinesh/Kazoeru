@@ -17,19 +17,13 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
 tracker = CentroidTracker(maxDisappeared=10)
 fps_start_time = datetime.datetime.now()
+input = "vid/LRT Encoded v6.1.mkv"
 
 class Camera(BaseCamera):
-
-    video_source = "vid/LRT Encoded v6.1.mkv"
-
-    @staticmethod
-    def set_video_source(source):
-        Camera.video_source = source
-
     @staticmethod
     def frames():
         frame_counter = 0
-        cap = cv2.VideoCapture(Camera.video_source)
+        cap = cv2.VideoCapture(input)
         total_frames = 0
         object_id_list = []
         frameCount = 0
@@ -37,7 +31,7 @@ class Camera(BaseCamera):
         status = "N/A"
 
         if not cap.isOpened():
-            raise RuntimeError('Could not start camera.')
+            raise RuntimeError('Could not find the video or start the camera.')
 
         while True:
             # Capture every 10th frame of the footage
@@ -45,7 +39,7 @@ class Camera(BaseCamera):
             cap.set(1, frameCount)
 
             ret, frame = cap.read()
-            frame = imutils.resize(frame, width=800)
+            frame = imutils.resize(frame, width=700)
 
             # If the last frame is almost reached, restart the footage from the first frame.
             if (frameCount + frameRate) > cap.get(cv2.CAP_PROP_FRAME_COUNT):
@@ -64,8 +58,8 @@ class Camera(BaseCamera):
                 if confidence > 0.75:
                     idx = int(person_detections[0, 0, i, 1])
 
-                    if CLASSES[idx] == "train":
-                        print("Train")
+                    # if CLASSES[idx] == "train":
+                    #     print("Train")
 
                     if CLASSES[idx] != "person":
                         continue
@@ -112,7 +106,7 @@ class Camera(BaseCamera):
                 status = "Not Crowded"
                 cv2.putText(frame, status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
 
-            # Pass as JPG frames
+            # Pass as JPG frames to Flask Web App
             yield cv2.imencode('.jpg', frame)[1].tobytes()
 
             # # OpenCV Window
@@ -120,25 +114,3 @@ class Camera(BaseCamera):
             # key = cv2.waitKey(1)
             # if key == ord('q'):
             #     break
-
-    @staticmethod
-    def frames2():
-        frame_counter = 0
-        camera = cv2.VideoCapture(Camera.video_source)
-        if not camera.isOpened():
-            raise RuntimeError('Could not start camera.')
-
-        while True:
-            frame_counter += 1
-            # read current frame
-            _, img = camera.read()
-
-            #if we reach the end of video file
-            if frame_counter == camera.get(cv2.CAP_PROP_FRAME_COUNT):
-                frame_counter = 0
-                camera = cv2.VideoCapture(Camera.video_source)
-
-            # encode as a jpeg image and return it
-            yield cv2.imencode('.jpg', img)[1].tobytes()
-
-
