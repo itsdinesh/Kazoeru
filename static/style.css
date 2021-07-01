@@ -1,0 +1,15 @@
+body{
+	background: black;
+	color: mediumpurple;
+	padding:1%;
+	text-align: left;
+	width: 700px;
+	height: 700px;
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -500px;
+}
+
+
