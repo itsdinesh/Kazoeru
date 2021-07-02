@@ -14,5 +14,5 @@ jobs:
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
         with:
-          inlineScript: Get-AzVM -ResourceGroupName "kazoeru-gunicorn"
+          inlineScript: Get-AzVM -ResourceGroupName "gunicorn"
           azPSVersion: 3.1.0
