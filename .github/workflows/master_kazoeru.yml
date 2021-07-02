@@ -64,5 +64,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'kazoeru'
-          slot-name: 'Azure'
+          slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_1540776198664446b37bb088a0bf1f4b }}
