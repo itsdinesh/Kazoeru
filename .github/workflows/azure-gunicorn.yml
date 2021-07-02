@@ -9,8 +9,8 @@ on:
       - master
 
 env:
-  WEBAPP_NAME: 'kazeoru-gunicorn' # Replace with the name of your Azure web app
-  RESOURCE_GROUP: 'kazeoru-gunicorn'   # Replace with the name of your Resource Group
+  WEBAPP_NAME: 'kazoeru-gunicorn' # Replace with the name of your Azure web app
+  RESOURCE_GROUP: 'kazoeru-gunicorn'   # Replace with the name of your Resource Group
 
 jobs:
   build-and-test:
@@ -60,6 +60,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+          enable-AzPSSession: true
 
       - name: Configure deployment and runtime settings on the webapp
         run: |
