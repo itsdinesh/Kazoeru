@@ -45,7 +45,7 @@ jobs:
     needs: build
     environment:
       name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      url: https://kazoeru.azurewebsites.net
 
     steps:
       - name: Download artifact from build job
@@ -53,6 +53,12 @@ jobs:
         with:
           name: python-app
           path: .
+          
+      - name: Delete Artifact
+        uses: GeekyEggo/delete-artifact@v1.0.0
+        with:
+          name: python-app
+          failOnError: true
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
