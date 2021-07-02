@@ -17,7 +17,7 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
 tracker = CentroidTracker(maxDisappeared=10)
 fps_start_time = datetime.datetime.now()
-input = "/app/vid/LRT Encoded V6.1.mkv"
+input = "./vid/LRT Encoded V6.1.mkv"
 
 class Camera(BaseCamera):
     @staticmethod
