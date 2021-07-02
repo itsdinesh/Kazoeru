@@ -9,7 +9,7 @@ Jinja2==2.11.3
 MarkupSafe==1.1.1
 MediaInfo==0.0.9
 numpy
-opencv-python==4.5.2.54
+opencv-python-headless==4.5.2.54
 pick==1.0.0
 scipy
 SQLAlchemy==1.4.12
