@@ -1,0 +1,17 @@
+name: Build and deploy Python app to Heroku Web App - kazoeru
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: aa989c34-832e-49c2-8019-143e8de1cce8
+          heroku_app_name: kazoeru
+          heroku_email: "apiit.dinesh@gmail.com"
