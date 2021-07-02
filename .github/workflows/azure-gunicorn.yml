@@ -1,10 +1,12 @@
 # For more info on Python, GitHub Actions, and Azure App Service 
 # please head to https://aka.ms/python-webapps-actions
 
+name: Build and deploy Python app to Azure Gunicorn Web App - Kazoeru
+
 on:
   push:
     branches: 
-      - main
+      - master
 
 env:
   WEBAPP_NAME: 'kazeoru-gunicorn' # Replace with the name of your Azure web app
