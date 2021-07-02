@@ -15,4 +15,3 @@ scipy==1.6.3
 SQLAlchemy==1.4.12
 waitress==2.0.0
 Werkzeug==1.0.1
-windows-curses==2.2.0
