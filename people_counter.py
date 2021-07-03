@@ -5,6 +5,7 @@ import numpy as np
 
 from base_camera import BaseCamera
 from centroid_tracker import CentroidTracker
+
 protopath = "models/MobileNetSSD_deploy.prototxt"
 modelpath = "models/MobileNetSSD_deploy.caffemodel"
 net = cv2.dnn.readNetFromCaffe(protopath, modelpath)
@@ -17,18 +18,17 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
 tracker = CentroidTracker(maxDisappeared=10)
 fps_start_time = datetime.datetime.now()
-input = "./vid/LRT Encoded V6.1.mkv"
+input_camera = "./vid/LRT Encoded V8.3.mkv"
+
 
 class Camera(BaseCamera):
     @staticmethod
     def frames():
-        frame_counter = 0
-        cap = cv2.VideoCapture(input)
-        total_frames = 0
-        object_id_list = []
+        cap = cv2.VideoCapture(input_camera)
         frameCount = 0
         frameRate = 10
-        status = "N/A"
+        train_indicator = 0
+        train_duration = 8
 
         if not cap.isOpened():
             raise RuntimeError('Could not find the video or start the camera.')
@@ -44,6 +44,8 @@ class Camera(BaseCamera):
             # If the last frame is almost reached, restart the footage from the first frame.
             if (frameCount + frameRate) > cap.get(cv2.CAP_PROP_FRAME_COUNT):
                 frameCount = 0
+                train_indicator = 0  # Reset train indicator for video loop
+                cv2.putText(frame, "Train Departed", (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
             (H, W) = frame.shape[:2]
@@ -58,8 +60,8 @@ class Camera(BaseCamera):
                 if confidence > 0.75:
                     idx = int(person_detections[0, 0, i, 1])
 
-                    # if CLASSES[idx] == "train":
-                    #     print("Train")
+                    if CLASSES[idx] == "train":
+                        train_indicator += 1  # Train has been detected
 
                     if CLASSES[idx] != "person":
                         continue
@@ -82,11 +84,6 @@ class Camera(BaseCamera):
                 y2 = int(y2)
 
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 1)
-                # text = "ID: {}".format(objectId)
-                # cv2.putText(frame, text, (x1, y1 - 5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 1)
-
-                # if objectId not in object_id_list:
-                #    object_id_list.append(objectId)
 
             # Person Count Indicator
             lpc_count = len(objects)
@@ -99,18 +96,18 @@ class Camera(BaseCamera):
             cv2.putText(frame, length, (5, 60), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 255), 1)
 
             # Crowd Status Indicator
-            if (lpc_count) > 5:
+            if lpc_count > 5:
                 status = "Crowded"
                 cv2.putText(frame, status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
             else:
                 status = "Not Crowded"
                 cv2.putText(frame, status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
 
+            if train_indicator == 0 or train_indicator > train_duration:
+                cv2.putText(frame, "Train Departed", (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
+
+            if 0 < train_indicator < train_duration:
+                cv2.putText(frame, "Train Arrived", (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
+
             # Pass as JPG frames to Flask Web App
             yield cv2.imencode('.jpg', frame)[1].tobytes()
-
-            # # OpenCV Window
-            # cv2.imshow("Application", frame)
-            # key = cv2.waitKey(1)
-            # if key == ord('q'):
-            #     break
