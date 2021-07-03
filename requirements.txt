@@ -3,7 +3,6 @@ Flask==1.1.2
 Flask-SQLAlchemy==2.5.1
 greenlet==1.0.0
 gunicorn==20.1.0
-gevent
 imutils==0.5.4
 itsdangerous==1.1.0
 Jinja2==2.11.3

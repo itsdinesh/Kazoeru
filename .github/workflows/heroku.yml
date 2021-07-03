@@ -1,4 +1,4 @@
-name: Build and deploy Python app to Heroku Web App - kazoeru
+name: Heroku
 
 on:
   push:
