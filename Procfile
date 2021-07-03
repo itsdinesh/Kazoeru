@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT --channel_timeout=1000 app:app
+web: waitress-serve --port=$PORT app:app
