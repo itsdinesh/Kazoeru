@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, jsonify
 from people_counter import Camera
 
 app = Flask(__name__)
@@ -8,7 +8,6 @@ def gen(camera):
     """Video streaming generator function."""
     while True:
         frame = camera.get_frame()
-        print(camera.get_crowd_count())
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
@@ -24,10 +23,18 @@ def video_feed():
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-
-@app.route('/crowd_data')
+@app.route('/crowd-data')
 def crowd_data():
-    return Response()
+    return jsonify(result=Camera.get_crowd_count())
+
+@app.route('/crowd-status')
+def crowd_status():
+    return jsonify(result=Camera.get_crowd_status())
+
+
+@app.route('/train-status')
+def train_status():
+    return jsonify(result=Camera.get_train_status())
 
 
 if __name__ == '__main__':

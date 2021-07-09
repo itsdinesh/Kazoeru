@@ -18,7 +18,9 @@ detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
 tracker = CentroidTracker(maxDisappeared=10)
 fps_start_time = datetime.datetime.now()
 input_camera = "./vid/LRT Encoded V8.3.mkv"
-crowd_count = []
+crowd_count = [1]
+crowd_status = [1]
+train_status = [1]
 
 
 class Camera(BaseCamera):
@@ -86,9 +88,8 @@ class Camera(BaseCamera):
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
             # Person Count Indicator
-            lpc_count = len(objects)
-            crowd_count.append(lpc_count)
-            lpc_txt = "Live Person Count: {}".format(lpc_count)
+            crowd_count[0] = len(objects)
+            lpc_txt = "Live Person Count: {}".format(crowd_count[0])
             cv2.putText(frame, lpc_txt, (5, 30), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 255), 1)
 
             # Video Length Indicator
@@ -97,22 +98,32 @@ class Camera(BaseCamera):
             cv2.putText(frame, length, (5, 60), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 255), 1)
 
             # Crowd Status Indicator
-            if lpc_count > 5:
-                status = "Crowded"
-                cv2.putText(frame, status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
+            if crowd_count[0] > 5:
+                crowd_status[0] = "Crowded"
+                cv2.putText(frame, crowd_status[0], (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
             else:
-                status = "Not Crowded"
-                cv2.putText(frame, status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
+                crowd_status[0] = "Not Crowded"
+                cv2.putText(frame, crowd_status[0], (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
 
             if train_indicator == 0 or train_indicator > train_duration:
-                cv2.putText(frame, "Train Departed", (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
+                train_status[0] = "Train Departed"
+                cv2.putText(frame, train_status[0], (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
 
             if 0 < train_indicator < train_duration:
-                cv2.putText(frame, "Train Arrived", (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
+                train_status[0] = "Train Arrived"
+                cv2.putText(frame, train_status[0], (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
 
             # Pass as JPG frames to Flask Web App
             yield cv2.imencode('.jpg', frame)[1].tobytes()
 
     @staticmethod
     def get_crowd_count():
-        return crowd_count[-1]
+        return crowd_count[0]
+
+    @staticmethod
+    def get_crowd_status():
+        return crowd_status[0]
+
+    @staticmethod
+    def get_train_status():
+        return train_status[0]

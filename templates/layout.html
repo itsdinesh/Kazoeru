@@ -1,11 +1,41 @@
 <html lang="us">
-    <head>
-        <title>Kazoeru</title>
-        <link rel="stylesheet" href='../static/style.css'/>
-    </head>
-     <body>
-        <h1>OpenCV Crowd Counting in Flask Web App</h1>
-        {% block body %}{% endblock %}
-        <p> Developed with <span style=color:red;">&hearts;</span> by Dinesh A/L S.Raju</p>
-    </body>
+<head>
+    <title>Kazoeru</title>
+    <link rel="stylesheet" href='../static/style.css'/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+ <body onload="update_values();">
+    <h1>OpenCV Crowd Counting in Flask Web App</h1>
+    {% block body %}{% endblock %}
+    <br><br>
+    Number of People: <span style="color:white" id="crowd-data"></span><br>
+    Crowd Status: <span style="color:white" id="crowd-status"></span><br>
+    Train Status: <span style="color:white" id="train-status"></span>
+    <p> Developed with <span style=color:red;">&hearts;</span> by Dinesh A/L S.Raju</p>
+
+</body>
+
+<script type="text/javascript">
+    const intervalID = setInterval(update_values, 1000);
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+    function update_values() {
+        $.getJSON($SCRIPT_ROOT + '/crowd-data',
+            function (data) {
+                $('#crowd-data').text(data.result);
+            })
+
+        $.getJSON($SCRIPT_ROOT + '/crowd-status',
+            function (data) {
+                $('#crowd-status').text(data.result);
+            })
+
+        $.getJSON($SCRIPT_ROOT + '/train-status',
+            function (data) {
+                $('#train-status').text(data.result);
+            })
+    }
+</script>
+
 </html>
