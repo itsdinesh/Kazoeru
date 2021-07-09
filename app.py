@@ -17,25 +17,23 @@ def test_feed():
     return render_template('video.html')
 
 
-@app.route('/video_feed')
+@app.route('/video_feed', methods=['GET'])
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/crowd-data')
+
+@app.route('/crowd-data', methods=['GET'])
 def crowd_data():
-    return jsonify(result=Camera.get_crowd_count())
+    status = Camera.get_crowd_count()
 
-@app.route('/crowd-status')
-def crowd_status():
-    return jsonify(result=Camera.get_crowd_status())
-
-
-@app.route('/train-status')
-def train_status():
-    return jsonify(result=Camera.get_train_status())
+    return jsonify(
+        crowd_count=status[0],
+        crowd_status=status[1],
+        train_status=status[2]
+    )
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0')

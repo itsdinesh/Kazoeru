@@ -17,23 +17,15 @@
 </body>
 
 <script type="text/javascript">
-    const intervalID = setInterval(update_values, 1000);
+    const intervalID = setInterval(update_values, 3000);
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 
     function update_values() {
         $.getJSON($SCRIPT_ROOT + '/crowd-data',
             function (data) {
-                $('#crowd-data').text(data.result);
-            })
-
-        $.getJSON($SCRIPT_ROOT + '/crowd-status',
-            function (data) {
-                $('#crowd-status').text(data.result);
-            })
-
-        $.getJSON($SCRIPT_ROOT + '/train-status',
-            function (data) {
-                $('#train-status').text(data.result);
+                $('#crowd-data').text(data.crowd_count);
+                $('#crowd-status').text(data.crowd_status);
+                $('#train-status').text(data.train_status);
             })
     }
 </script>
