@@ -2,7 +2,6 @@ import cv2
 import datetime
 import imutils
 import numpy as np
-
 from base_camera import BaseCamera
 from centroid_tracker import CentroidTracker
 
@@ -19,6 +18,7 @@ detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
 tracker = CentroidTracker(maxDisappeared=10)
 fps_start_time = datetime.datetime.now()
 input_camera = "./vid/LRT Encoded V8.3.mkv"
+crowd_count = []
 
 
 class Camera(BaseCamera):
@@ -87,6 +87,7 @@ class Camera(BaseCamera):
 
             # Person Count Indicator
             lpc_count = len(objects)
+            crowd_count.append(lpc_count)
             lpc_txt = "Live Person Count: {}".format(lpc_count)
             cv2.putText(frame, lpc_txt, (5, 30), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 255, 255), 1)
 
@@ -111,3 +112,7 @@ class Camera(BaseCamera):
 
             # Pass as JPG frames to Flask Web App
             yield cv2.imencode('.jpg', frame)[1].tobytes()
+
+    @staticmethod
+    def get_crowd_count():
+        return crowd_count[-1]
