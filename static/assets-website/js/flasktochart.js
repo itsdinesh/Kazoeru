@@ -1,12 +1,12 @@
-var chart;
+let chart;
 
 function requestData()
 {
     // Ajax call to get the Data from Flask
-    var requests = $.get('/data');
-    var tm = requests.done(function (result)
+    let requests = $.get('/data');
+    requests.done(function (result)
     {
-        var series = chart.series[0],
+        let series = chart.series[0],
             shift = series.data.length > 20;
 
         // add the point

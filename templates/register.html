@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../static/assets-website/css/responsive-entry.css">
 </head>
 
-<body style="overflow:auto;>
+<body style="overflow:auto">
     <section class="sign_up_sec">
        <div class="container-fluid">
            <div class="row">
@@ -30,16 +30,16 @@
                             {% endwith %}
                            <form class="sign_frm" method="POST" action="/register">
                                <div class="form-group">
-                                  <label for="">Name</label>
-                                   <input type="text" name="name" class="form-control" placeholder="Enter your Name" required>
+                                  <label for="name">Name</label>
+                                   <input id="name" type="text" name="name" class="form-control" placeholder="Enter your Name" required>
                                </div>
                                <div class="form-group">
-                                  <label for="">Email Address</label>
-                                   <input type="email" name="email" class="form-control" placeholder="Enter your Email Address" required/>
+                                  <label for="email">Email Address</label>
+                                   <input type="email" id="email" name="email" class="form-control" placeholder="Enter your Email Address" required/>
                                </div>
                                <div class="form-group">
-                                  <label for="">Password (8 characters minimum):</label>
-                                   <input id="password-field" type="password" class="form-control" name="password"  placeholder="Enter your Password" minlength="8" required>
+                                  <label for="password">Password (8 characters minimum):</label>
+                                   <input id="password" type="password" class="form-control" name="password"  placeholder="Enter your Password" minlength="8" required>
                                </div>
                                <div class="form-group">
                                   <button type="submit" class="btn btn_sign">Create Account</button>

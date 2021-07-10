@@ -24,6 +24,7 @@ class User(UserMixin, db.Model):
 
 def create_app():
     app = Flask(__name__)
+    app.register_error_handler(404, page_not_found)
 
     app.config['SECRET_KEY'] = 'kazoeru-is-the-secret-key'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
@@ -72,6 +73,12 @@ auth = Blueprint('auth', __name__)
 @auth.route('/')
 def index():
     return render_template('index.html')
+
+
+@auth.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
 
 @auth.route('/about')
@@ -215,6 +222,7 @@ def register_post():
 def account_settings():
     return render_template('accountsettings.html')
 
+
 @auth.route('/account-settings-name', methods=['POST'])
 @login_required
 def account_settings_name_post():
@@ -230,6 +238,7 @@ def account_settings_name_post():
     if user.role == "operator":
         flash('Staff\'s Name has been changed!')
         return redirect(url_for('auth.user_dashboard'))
+
 
 @auth.route('/account-settings-email', methods=['POST'])
 @login_required
@@ -252,6 +261,7 @@ def account_settings_email_post():
             flash('Staff\'s Email has been changed!')
             return redirect(url_for('auth.staff_dashboard'))
 
+
 @auth.route('/account-settings-password', methods=['POST'])
 def account_settings_post():
     old_password = request.form.get('old-password')
@@ -260,9 +270,10 @@ def account_settings_post():
 
     if not user or not check_password_hash(user.password, old_password):
         flash('Please check your login details and try again.')
-        return redirect(url_for('auth.account_settings'))  # if the user doesn't exist or password is wrong, reload the page
+        return redirect(
+            url_for('auth.account_settings'))  # if the user doesn't exist or password is wrong, reload the page
     else:
-        user.password = password=generate_password_hash(new_password, method='sha256')
+        user.password = generate_password_hash(new_password, method='sha256')
         db.session.commit()
 
         if current_user.role == "user":
@@ -272,6 +283,7 @@ def account_settings_post():
         if current_user.role == "operator":
             flash('Staff\'s Password has been updated!')
             return redirect(url_for('auth.staff_dashboard'))
+
 
 @auth.route('/logout')
 @login_required

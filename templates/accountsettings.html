@@ -32,18 +32,18 @@
 
                            <form class="sign_frm" method="POST" action="/account-settings-name">
                                 <div class="form-group">
-                                  <label for="">Name</label>
-                                   <input type="text" name="name" class="form-control" value="{{ current_user.name }}" placeholder="Enter your Name"  required>
+                                  <label for="name">Name</label>
+                                   <input id="name" type="text" name="name" class="form-control" value="{{ current_user.name }}" placeholder="Enter your Name"  required>
                                </div>
-                              <button type="submit_newname" class="btn btn_sign">Update Name</button>
+                              <button type="submit" class="btn btn_sign">Update Name</button>
                            </form>
                             <br>
                             <form class="sign_frm" method="POST" action="/account-settings-email">
                                <div class="form-group">
-                                  <label for="">Email Address</label>
-                                   <input type="email" name="email" class="form-control" value="{{ current_user.email }}" placeholder="Enter your Email"  required/>
+                                  <label for="email">Email Address</label>
+                                   <input id="email" type="email" name="email" class="form-control" value="{{ current_user.email }}" placeholder="Enter your Email"  required/>
                                </div>
-                              <button type="submit_newemail" class="btn btn_sign">Update Email</button>
+                              <button type="submit" class="btn btn_sign">Update Email</button>
                            </form>
                            <br>
                            <form class="sign_frm" method="POST" action="/account-settings-password">
@@ -56,7 +56,7 @@
                                    <label for="password-field"></label><input id="password-field" type="password" class="form-control" name="password" placeholder="Enter your New Password" minlength="8" required>
                                </div>
                                <div class="form-group">
-                                  <button type="submit_new_password" class="btn btn_sign">Update Password</button>
+                                  <button type="submit" class="btn btn_sign">Update Password</button>
                                </div>
                            </form>
                        </div>
