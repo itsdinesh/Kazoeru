@@ -100,6 +100,7 @@ def profile():
 @login_required
 @requires_roles('user')
 def user_dashboard():
+    gen(Camera())  # Start running OpenCV video.
     return render_template('userdashboard.html', name=current_user.name)
 
 
@@ -223,7 +224,9 @@ def gen(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
-@auth.route('/video_feed', methods=['GET'])
+@auth.route('/video-feed', methods=['GET'])
+@login_required
+@requires_roles('operator')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),
