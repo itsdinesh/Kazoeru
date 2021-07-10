@@ -95,7 +95,7 @@ class Camera(BaseCamera):
             cv2.putText(frame, length, (5, 60), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 255), 1)
 
             # Crowd Status Indicator
-            if crowd_count > 5:
+            if crowd_count > 4:
                 crowd_status = "Crowded"
                 cv2.putText(frame, crowd_status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
             else:
