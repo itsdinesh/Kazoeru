@@ -1,0 +1,86 @@
+<html lang="en">
+<head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Staff Settings - Kazoeru</title>
+    <link href="../static/assets-website/images/logo.png" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="../static/assets-external/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../static/assets-website/css/style-entry.css">
+    <link rel="stylesheet" href="../static/assets-website/css/responsive-entry.css">
+</head>
+
+<body>
+    <section class="sign_up_sec">
+       <div class="container-fluid">
+           <div class="row">
+               <div class="col-lg-6 col-md-6 ">
+                   <div class="row left_bg justify-content-center overflow-auto">
+                       <div class="col-lg-7 col-md-9">
+                       <div class="sign_up_frm">
+                        <a href="/"><img src="../static/assets-website/images/logo-banner.png" alt="logo" class="img-fluid"></a>
+                           <h4>Staff Settings</h4>
+                           <p>Change your staff settings here!</p>
+
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Warning!</strong> {{ messages[0] }}
+                                </div>
+                            {% endif %}
+                            {% endwith %}
+
+                           <form class="sign_frm" method="POST" action="/staff-settings-name">
+                                <div class="form-group">
+                                  <label for="">Name</label>
+                                   <input type="text" name="name" class="form-control" value="{{ current_user.name }}" required>
+                               </div>
+                              <button type="submit_newname" class="btn btn_sign">Update Name</button>
+                           </form>
+                            <br>
+                            <form class="sign_frm" method="POST" action="/staff-settings-email">
+                               <div class="form-group">
+                                  <label for="">Email Address</label>
+                                   <input type="email" name="email" class="form-control" value="{{ current_user.email }}" required/>
+                               </div>
+                              <button type="submit_newemail" class="btn btn_sign">Update Email</button>
+                           </form>
+                           <br>
+                           <form class="sign_frm" method="POST" action="/staff-settings-password">
+                              <div class="form-group">
+                                  <label for="">Old Password (8 characters minimum):</label>
+                                  <label for="old-password-field"></label><input id="old-password-field" type="password" class="form-control" name="old-password" placeholder="Enter your Old Password" minlength="8" required>
+                               </div>
+                               <div class="form-group">
+                                  <label for="">Password (8 characters minimum):</label>
+                                   <label for="password-field"></label><input id="password-field" type="password" class="form-control" name="password" placeholder="Enter your New Password" minlength="8" required>
+                               </div>
+                               <div class="form-group">
+                                  <button type="submit_new_password" class="btn btn_sign">Update Password</button>
+                               </div>
+                           </form>
+                       </div>
+                   </div>
+                   </div>
+               </div>
+               <div class="col-lg-6 mobile_hide col-md-6">
+                   <div class="sign_up_img">
+                       <div class="img_head_logo">
+                        <a href="/">  <img src="../static/assets-website/images/logo.png" alt="logo" class="img-fluid"></a>
+                       </div>
+                       <div class="img_bdy">
+                           <img src="../static/assets-website/images/register-sidepic.jpg" alt="img" class="img-fluid">
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </section>
+</body>
+
+<script src="../static/assets-external/js/jquery.min.js"></script>
+<script src="../static/assets-external/js/bootstrap.min.js">
+     new WOW().init();
+</script>
+
+</html>
