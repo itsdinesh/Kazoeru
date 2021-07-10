@@ -1,0 +1,67 @@
+<html lang="en">
+<head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Staff Login - Kazoeru</title>
+    <link href="../static/assets-website/images/logo.png" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="../static/assets-external/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets-website/css/style-entry.css">
+    <link rel="stylesheet" href="../static/assets-website/css/responsive-entry.css">
+</head>
+
+<body>
+    <section class="sign_up_sec">
+       <div class="container-fluid">
+           <div class="row">
+               <div class="col-lg-6 col-md-6">
+                   <div class="row left_bg justify-content-center">
+                       <div class="col-lg-7 col-md-9">
+                       <div class="sign_up_frm">
+                           <a href="/"><img src="../static/assets-website/images/logo-banner.png" alt="logo" class="img-fluid"></a>
+                           <br><br>
+                           <h4>Operator Login</h4>
+                           <p>Access your account and view camera feed of number of crowds in the train station</p>
+                           <br>
+
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ messages[0] }}
+                                </div>
+                            {% endif %}
+                            {% endwith %}
+
+                           <form class="sign_frm" method="POST" action="/operatorlogin">
+                               <div class="form-group">
+                                  <label for="">Email Address</label>
+                                   <input type="email" name="email" class="form-control" placeholder="Enter Email Address" required>
+                               </div>
+                               <div class="form-group">
+                                  <label for="password-field">Password</label>
+                                   <input id="password-field" type="password" class="form-control" name="password"  placeholder="Enter Password" required minlength="8">
+                               </div>
+
+                               <div class="form-group">
+                                  <button type="submit" class="btn btn_sign">Log In</button>
+                               </div>
+                               <div class="hav_acnt"><span>Don't have an account? <a href="/register">Sign Up </a></span></div>
+                           </form>
+                       </div>
+                   </div>
+                   </div>
+               </div>
+               <div class="col-lg-6 mobile_hide col-md-6">
+                   <div class="sign_up_img">
+                       <div class="img_head_logo">
+                        <a href="/"><img src="../static/assets-website/images/logo.png" alt="logo" class="img-fluid"></a>
+                       </div>
+                       <div class="img_bdy">
+                           <img src="../static/assets-website/images/staff-sidepic.png" alt="img" class="img-fluid">
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </section>
+</body>
+</html>

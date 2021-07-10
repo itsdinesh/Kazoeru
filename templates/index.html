@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="{{ url_for('static', filename='assets-website/images/logo.png') }}" rel="shortcut icon" type="image/x-icon" />
+  <link href="../static/assets-external/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../static/assets-external/css/fontawesome-all.css" rel="stylesheet" />
+   <link rel="stylesheet" href="../static/assets-website/css/style-home.css">
+  <title>Homepage - Kazoeru</title>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-xl bg-nav pt-xl-5">
+     <div class="container">
+        <a class="navbar-brand" href="/"><img alt="logo" class="logo-pt-2" src="../static/assets-website/images/logo-banner.png"/> </a>
+        <button class="navbar-toggler align-content-end" data-target="#navbar" data-toggle="collapse" type="button">
+            <i class="fas fa-bars" style="font-size: 175%;"></i></button>
+        <div class="collapse navbar-collapse" id="navbar">
+           <ul class="navbar-nav ml-auto">
+              <li class="nav-item mx-auto pt-2"><a class="nav-link text-center started-navbar" href="/register">Register</a></li>
+              <li class="nav-item text-none mx-auto pt-2"><a class="nav-link text-center text-none login-navbar" href="/login">Log In</a></li>
+           </ul>
+           <!--  -->
+        </div>
+     </div>
+  </nav>
+  <!-- Navbar End --><!--    /////header content starts here////////////-->
+  <hr><br>
+  <section class="align-items-center" id="top-header">
+     <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Warning!</strong> {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+        <div class="py-1 d-none d-lg-block"></div>
+        <div class="row align-items-center">
+           <div class="col-md-10 wow fadeInUp" data-wow-delay=".1s">
+              <h1 class="text-white">Welcome to Kazoeru.</h1>
+              <p class="p1 text-white ">A crowd counting system created for Train Station in Malaysia.</p>
+              <a class="btn get-started" href="/register">Get Started</a>
+           </div>
+        </div>
+     </div>
+  </section>
+  <section class="bg-footer pt-2">
+     <hr>
+     <div class="container">
+        <div class="row py-3 text-white row justify-content-between">
+           <div class="col-md-3 pt-3 pt-md-0">
+              <p class="card-p2 "><span class="p1 footer-color medium">Links</span><br />
+              <a href="/operatorlogin" style="color:white">Staff Login</a><br />
+              <a href="/about" style="color:white">About this project</a><br />
+           </div>
+           <div class="col-md-3 pt-3 pt-md-0">
+              <a href="/"><img class="img-fluid d-md-block" src="../static/assets-website/images/logo-banner.png"/></a>
+              <p class="text-copyright medium pt-2">Developed with <span style=color:#ff0000;">&nbsp;&hearts;&nbsp;</span> by Dinesh A/L S.Raju<br>University Final Year Project &copy; 2021</p>
+              <div class="footer-img py-3"></div>
+           </div>
+        </div>
+     </div>
+  </section>
+</body>
+
+<script src="../static/assets-external/js/jquery.min.js"></script>
+<script src="../static/assets-external/js/bootstrap.min.js">
+     new WOW().init();
+</script>
+</html>

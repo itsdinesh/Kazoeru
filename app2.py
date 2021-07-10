@@ -12,9 +12,9 @@ def gen(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
-@app.route('/')
-def test_feed():
-    return render_template('OLD/video.html')
+# @app.route('/')
+# def test_feed():
+#     return render_template('OLD/video.html')
 
 
 @app.route('/video_feed', methods=['GET'])

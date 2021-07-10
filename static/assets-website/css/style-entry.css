@@ -1,0 +1,252 @@
+ *{
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    font-variant: none;
+}
+ol,
+ul{
+    list-style-type: none;
+    margin: 0;
+}
+ul li{
+	color:  #5267F7;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p,
+i,
+span,
+input{
+    padding: 0;
+    margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5{
+  color: #000;
+  font-size: 25px;
+}
+body{
+    overflow: hidden;
+}
+
+img{
+    vertical-align: middle;
+}
+
+/* all fonts link start */
+@font-face{
+	font-family: TTNorms-Regular;
+	src: url(../../assets-external/fonts/TTNorms-Regular.otf);
+}
+@font-face{
+	font-family: TTNorms-Medium;
+	src: url(../../assets-external/fonts/TTNorms-Medium.otf);
+}
+@font-face{
+	font-family: TTNorms-Light;
+	src: url(../../assets-external/fonts/TTNorms-Light.otf);
+}
+@font-face{
+	font-family: TTNorms-Bold;
+	src: url(../../assets-external/fonts/TTNorms-Bold.otf);
+}
+/* all fonts link end */
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  color:white;
+  text-decoration: underline;
+}
+
+.left_bg{
+    background: #5267F7;
+    min-height: 100vh;
+    padding: 20px 0;
+}
+.sign_up_frm{
+    text-align: center;
+    padding-top: 10px;
+}
+.sign_up_frm img{
+    width: 200px;
+    padding-bottom: 10px;
+}
+.sign_up_frm h4{
+    font-family: TTNorms-Medium, sans-serif;
+    color: #fff;
+    font-size: 44px;
+    padding-bottom: 10px;
+}
+.sign_up_frm p{
+    font-family: TTNorms-Regular, sans-serif;
+    color: #fff;
+    font-size: 18px;
+    padding-bottom: 10px;
+    line-height: 24px;
+}
+.sign_frm{
+    text-align: left;
+    
+}
+.sign_frm label{
+    font-family: TTNorms-Regular, sans-serif;
+    color: #fff;
+    font-size: 17px;
+}
+.sign_frm input{
+    background: #425FEA;
+    color: #fff;
+    font-family: TTNorms-Regular, sans-serif;
+    font-size: 15px;
+    border: 1px solid #425FEA;
+    border-radius: 5px;
+    padding: 6%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    
+}
+.sign_frm input:focus-within{
+    box-shadow: none;
+    background: #5267F7;
+    border: 1px solid #fff;
+    color: #fff;
+}
+.sign_frm .btn_sign{
+    background: #3EC1F3;
+    width: 100%;
+    display: block;
+    font-family: TTNorms-Medium, sans-serif;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 10px;
+}
+.sign_frm .btn_sign:hover{
+    color: #5267F7;
+    border: 1px solid #3EC1F3;
+    background: #fff;
+}
+.sign_frm a{
+    color: #fff;
+    font-size: 14px;
+    font-family: TTNorms-Light, sans-serif;
+    float: right;
+}
+.sign_frm input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #7187EF;
+  opacity: 1; /* Firefox */
+}
+.hav_acnt{
+    text-align: center;
+    padding-bottom: 20px;
+}
+.hav_acnt span{
+     color: #fff;
+    font-size: 17px;
+    font-family: TTNorms-Light, sans-serif;
+    text-align: center;
+}
+.hav_acnt a{
+    text-align: center;
+    float: none;
+    font-family: TTNorms-Medium, sans-serif;
+    color: #3EC1F3;
+    font-size: 19px;
+    padding-left: 5px;
+}
+.signup_ftr{
+    text-align: center;
+}
+.signup_ftr ul li{
+    display: inline-block;
+}
+.signup_ftr ul li a i{
+    font-size: 20px;
+    color: #fff;
+    padding: 0 20px;
+}
+.img_head_logo{
+    text-align: right;
+}
+.img_head_logo img{
+    width: 90px;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+.img_bdy{
+    text-align: center;
+    padding-top: 40px;
+}
+.img_bdy img{
+    width: 80%;
+    margin: 0 auto;
+}
+.sign_up_img{
+    min-height: 100vh;
+}
+.img_ftr ul{
+    text-align: right;
+    padding-top: 60px;
+}
+.img_ftr ul li{
+    display: inline-block;
+}
+
+.img_ftr ul li a{
+    display: block;
+    font-family: TTNorms-Regular, sans-serif;
+    font-size: 17px;
+    color: #5267F7;
+    padding: 0 7px;
+}
+.img_ftr ul li a i{
+    font-size: 7px;
+}
+.field_icon{
+    float: right;
+  margin-left: -25px;
+  margin-top: -42px;
+  position: relative;
+  z-index: 2;
+    right: 8px;
+    color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #eeeeee; 
+    
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #5267F7; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #364de2; 
+  }
