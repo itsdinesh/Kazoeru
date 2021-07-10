@@ -14,7 +14,7 @@ def gen(camera):
 
 @app.route('/')
 def test_feed():
-    return render_template('video.html')
+    return render_template('OLD/video.html')
 
 
 @app.route('/video_feed', methods=['GET'])
