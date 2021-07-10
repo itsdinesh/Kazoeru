@@ -108,7 +108,7 @@ def user_dashboard():
 @login_required
 @requires_roles('operator')
 def staff_dashboard():
-    return render_template('operatordashboard.html', name=current_user.name)
+    return render_template('staffdashboard.html', name=current_user.name)
 
 
 @auth.route('/login', methods=['POST'])
@@ -121,32 +121,37 @@ def login_post():
 
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
-    if user.role == "operator":
+    if user is None:
+        flash('An user account does not exist in this email.')
+        return redirect(
+            url_for('auth.login'))  # if the user doesn't exist or password is wrong, reload the page
+
+    elif user.role == "operator":
         flash('Please use the staff login to log into your account.')
         return redirect(url_for('auth.login'))
 
-    if not user or not check_password_hash(user.password, password):
+    elif not user or not check_password_hash(user.password, password):
         flash('Please check your login details and try again.')
         return redirect(url_for('auth.login'))  # if the user doesn't exist or password is wrong, reload the page
 
     # if the check pass, then we know the user has the right credentials
-    if user.role == "user":
+    elif user.role == "user":
         login_user(user, remember=remember)
         return redirect(url_for('auth.user_dashboard'))
 
 
-@auth.route('/operatorlogin')
+@auth.route('/staff-login')
 def operatorlogin():
     if current_user.is_authenticated and current_user.role == 'operator':
         return redirect(url_for('auth.staff_dashboard'))
     elif current_user.is_authenticated and current_user.role == 'user':
         return redirect(url_for('auth.user_dashboard'))
     else:
-        return render_template('operatorlogin.html')
+        return render_template('stafflogin.html')
 
 
-@auth.route('/operatorlogin', methods=['POST'])
-def operatorlogin_post():
+@auth.route('/staff-login', methods=['POST'])
+def operatorlogin_post(*roles):
     email = request.form.get('email')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
@@ -156,19 +161,26 @@ def operatorlogin_post():
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
 
-    if user.role == "user":
+    if user is None:
+        flash('An user account does not exist in this email.')
+        return redirect(
+            url_for('auth.operatorlogin'))  # if the user doesn't exist or password is wrong, reload the page
+
+    elif user.role == "user":
         flash('Please use the regular user login to log into your account.')
         return redirect(url_for('auth.operatorlogin'))
 
-    if not user or not check_password_hash(user.password, password):
+    elif user.email == email and check_password_hash(user.password, password) and user.role == 'operator':
+        # if the above check passes, then we know the user has the right credentials
+        login_user(user, remember=remember)
+        return redirect(url_for('auth.staff_dashboard'))
+
+    elif not user or not check_password_hash(user.password, password) or user is None:
         flash('Please check your login details and try again.')
         return redirect(
             url_for('auth.operatorlogin'))  # if the user doesn't exist or password is wrong, reload the page
 
-    if user.role == 'operator':
-        # if the above check passes, then we know the user has the right credentials
-        login_user(user, remember=remember)
-        return redirect(url_for('auth.staff_dashboard'))
+
 
 
 @auth.route('/register')

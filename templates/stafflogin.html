@@ -19,7 +19,7 @@
                        <div class="sign_up_frm">
                            <a href="/"><img src="../static/assets-website/images/logo-banner.png" alt="logo" class="img-fluid"></a>
                            <br><br>
-                           <h4>Operator Login</h4>
+                           <h4>Staff Login</h4>
                            <p>Access your account and view camera feed of number of crowds in the train station</p>
                            <br>
 
@@ -31,7 +31,7 @@
                             {% endif %}
                             {% endwith %}
 
-                           <form class="sign_frm" method="POST" action="/operatorlogin">
+                           <form class="sign_frm" method="POST" action="/staff-login">
                                <div class="form-group">
                                   <label for="">Email Address</label>
                                    <input type="email" name="email" class="form-control" placeholder="Enter Email Address" required>
@@ -44,7 +44,6 @@
                                <div class="form-group">
                                   <button type="submit" class="btn btn_sign">Log In</button>
                                </div>
-                               <div class="hav_acnt"><span>Don't have an account? <a href="/register">Sign Up </a></span></div>
                            </form>
                        </div>
                    </div>
