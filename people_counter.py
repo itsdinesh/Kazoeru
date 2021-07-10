@@ -19,11 +19,6 @@ input_camera = "./vid/LRT Encoded V8.3.mkv"
 status = [0, 0, 0]
 
 
-# crowd_count = [1]
-# crowd_status = [1]
-# train_status = [1]
-
-
 class Camera(BaseCamera):
     @staticmethod
     def frames():
@@ -125,14 +120,3 @@ class Camera(BaseCamera):
     @staticmethod
     def get_crowd_count():
         return status
-
-        # print(crowd_count)
-        # return crowd_count
-
-    # @staticmethod
-    # def get_crowd_status():
-    #     return crowd_status
-    #
-    # @staticmethod
-    # def get_train_status():
-    #     return train_status
