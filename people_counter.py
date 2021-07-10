@@ -14,7 +14,7 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
            "sofa", "train", "tvmonitor"]
 
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
-tracker = CentroidTracker(maxDisappeared=10)
+tracker = CentroidTracker(max_disappeared=10)
 input_camera = "./vid/LRT Encoded V8.3.mkv"
 status = [0, 0, 0]
 

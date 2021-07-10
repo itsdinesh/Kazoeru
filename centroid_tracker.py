@@ -3,8 +3,9 @@ from scipy.spatial import distance as dist
 from collections import OrderedDict
 import numpy as np
 
+
 class CentroidTracker:
-    def __init__(self, maxDisappeared=50, maxDistance=50):
+    def __init__(self, max_disappeared=50, max_distance=50):
         # initialize the next unique object ID along with two ordered
         # dictionaries used to keep track of mapping a given object
         # ID to its centroid and number of consecutive frames it has
@@ -17,27 +18,27 @@ class CentroidTracker:
         # store the number of maximum consecutive frames a given
         # object is allowed to be marked as "disappeared" until we
         # need to deregister the object from tracking
-        self.maxDisappeared = maxDisappeared
+        self.maxDisappeared = max_disappeared
 
         # store the maximum distance between centroids to associate
         # an object -- if the distance is larger than this maximum
         # distance we'll start to mark the object as "disappeared"
-        self.maxDistance = maxDistance
+        self.maxDistance = max_distance
 
-    def register(self, centroid, inputRect):
+    def register(self, centroid, input_rect):
         # when registering an object we use the next available object
         # ID to store the centroid
         self.objects[self.nextObjectID] = centroid
-        self.bbox[self.nextObjectID] = inputRect  # CHANGE
+        self.bbox[self.nextObjectID] = input_rect  # CHANGE
         self.disappeared[self.nextObjectID] = 0
         self.nextObjectID += 1
 
-    def deregister(self, objectID):
+    def deregister(self, object_id):
         # to deregister an object ID we delete the object ID from
         # both of our respective dictionaries
-        del self.objects[objectID]
-        del self.disappeared[objectID]
-        del self.bbox[objectID]  # CHANGE
+        del self.objects[object_id]
+        del self.disappeared[object_id]
+        del self.bbox[object_id]  # CHANGE
 
     def update(self, rects):
         # check to see if the list of input bounding box rectangles
@@ -168,4 +169,3 @@ class CentroidTracker:
         # return the set of trackable objects
         # return self.objects
         return self.bbox
-

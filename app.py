@@ -89,13 +89,6 @@ def login():
         return render_template('login.html')
 
 
-@auth.route('/profile')
-@login_required
-@requires_roles('user')
-def profile():
-    return render_template('profile.html', name=current_user.name)
-
-
 @auth.route('/user-dashboard')
 @login_required
 @requires_roles('user')
@@ -151,7 +144,7 @@ def operatorlogin():
 
 
 @auth.route('/staff-login', methods=['POST'])
-def operatorlogin_post(*roles):
+def operatorlogin_post():
     email = request.form.get('email')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
@@ -181,8 +174,6 @@ def operatorlogin_post(*roles):
             url_for('auth.operatorlogin'))  # if the user doesn't exist or password is wrong, reload the page
 
 
-
-
 @auth.route('/register')
 def register():
     return render_template('register.html')
@@ -208,7 +199,7 @@ def register_post():
     db.session.add(new_user)
     db.session.commit()
 
-    flash('Registration successful, please log into your account in the fields below!')
+    flash('Log into your newly registered account to continue!')
     return redirect(url_for('auth.login'))
 
 
@@ -222,8 +213,8 @@ def logout():
 @auth.route('/data')
 def data():
     status = Camera.get_crowd_count()
-    data = [(time.time() + 28800) * 1000, status[0]]
-    response = make_response(json.dumps(data))
+    graph_data = [(time.time() + 28800) * 1000, status[0]]
+    response = make_response(json.dumps(graph_data))
     response.content_type = 'application/json'
     return response
 
@@ -246,6 +237,7 @@ def video_feed():
 
 
 @auth.route('/crowd-data', methods=['GET'])
+@login_required
 def crowd_data():
     status = Camera.get_crowd_count()
 
@@ -254,11 +246,6 @@ def crowd_data():
         crowd_status=status[1],
         train_status=status[2]
     )
-
-
-@auth.route('/oldindex')
-def test_feed():
-    return render_template('OLD/video.html')
 
 
 application = create_app()

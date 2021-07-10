@@ -23,17 +23,17 @@
                            <p>Access your account and monitor number of crowds in the train station</p>
                             <br>
 
-                           {% with messages = get_flashed_messages() %}
-                            {% if messages %}
-                                {% if "success" in messages[0] %}
-                                    <div class="alert alert-success" role="alert">
-                                        {{ messages[0] }}
-                                    </div>
-                                {% else %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ messages[0] }}
+                            {% with messages = get_flashed_messages() %}
+                            {% if "newly" in messages[0] %}
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Successful Registration!</strong><br>{{ messages[0] }}
                                 </div>
-                                {% endif %}
+                            {% elif messages %}
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Warning!</strong> {{ messages[0] }}
+                                </div>
                             {% endif %}
                             {% endwith %}
 
@@ -70,4 +70,8 @@
        </div>
     </section>
 </body>
+<script src="../static/assets-external/js/jquery.min.js"></script>
+<script src="../static/assets-external/js/bootstrap.min.js">
+     new WOW().init();
+</script>
 </html>

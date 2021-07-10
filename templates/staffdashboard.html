@@ -39,6 +39,7 @@
 
 	<section class="mt-4">
 	  <div class="container">
+
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -52,7 +53,7 @@
 			  <!-- FIRST DASHBOARD OPTION PROJECT -->
 			<div class="col-sm-7">
 			  <div class="border border-dark rounded-lg p-3">
-				<h3 class="h2 mb-3 font-weight-bold">LRT Pasar Seni Video Feed</h3>
+                  <h3 class="h2 mb-3 font-weight-bold"><u>LRT Pasar Seni Video Feed</u></h3>
 				   <img src="{{ url_for('auth.video_feed') }}" class="img-fluid" alt="LRT Pasar Seni Video Feed">
                     <br><br>
                     <h5>
@@ -67,7 +68,7 @@
             <!-- SECOND DASHBOARD OPTION PROJECT -->
 			<div class="col-sm-5">
                 <div class="p-1">
-                    <h3 class="h2 mb-3 font-weight-bold">Crowd Statistics</h3>
+                    <h3 class="h2 mb-3 font-weight-bold"><u>Crowd Statistics</u></h3>
                     <div class="container-fluid" id="data-container"></div>
                 </div>
 			</div>
@@ -106,5 +107,4 @@
             })
     }
 </script>
-
 </html>
