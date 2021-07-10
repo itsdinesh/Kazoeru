@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT --channel-timeout=4000 --threads=2 app:application
+web: waitress-serve --port=$PORT --channel-timeout=4000 --threads=6 app:application
