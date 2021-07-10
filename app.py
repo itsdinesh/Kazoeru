@@ -1,7 +1,5 @@
 import json
-import os
 import time
-from random import random
 
 from flask import Blueprint, render_template, url_for, redirect, request, flash, make_response, Response, jsonify
 from flask_login import login_user, login_required, logout_user, current_user, LoginManager, UserMixin
@@ -9,18 +7,20 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from waitress import serve
+
 # init SQLAlchemy so we can use it later in our models
 from people_counter import Camera
 
 db = SQLAlchemy()
 
+
 class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
     name = db.Column(db.String)
     role = db.Column(db.String, default="user")
+
 
 def create_app():
     app = Flask(__name__)
@@ -44,6 +44,7 @@ def create_app():
     app.register_blueprint(auth_blueprint)
     return app
 
+
 def requires_roles(*roles):
     def wrapper(f):
         @wraps(f)
@@ -64,15 +65,19 @@ def requires_roles(*roles):
 
     return wrapper
 
+
 auth = Blueprint('auth', __name__)
+
 
 @auth.route('/')
 def index():
     return render_template('index.html')
 
+
 @auth.route('/about')
 def about():
     return render_template('about.html')
+
 
 @auth.route('/login')
 def login():
@@ -83,11 +88,13 @@ def login():
     else:
         return render_template('login.html')
 
+
 @auth.route('/profile')
 @login_required
 @requires_roles('user')
 def profile():
     return render_template('profile.html', name=current_user.name)
+
 
 @auth.route('/user-dashboard')
 @login_required
@@ -95,11 +102,13 @@ def profile():
 def user_dashboard():
     return render_template('userdashboard.html', name=current_user.name)
 
+
 @auth.route('/staff-dashboard')
 @login_required
 @requires_roles('operator')
 def staff_dashboard():
     return render_template('operatordashboard.html', name=current_user.name)
+
 
 @auth.route('/login', methods=['POST'])
 def login_post():
@@ -115,11 +124,9 @@ def login_post():
         flash('Please use the staff login to log into your account.')
         return redirect(url_for('auth.login'))
 
-
     if not user or not check_password_hash(user.password, password):
         flash('Please check your login details and try again.')
-        return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
-
+        return redirect(url_for('auth.login'))  # if the user doesn't exist or password is wrong, reload the page
 
     # if the check pass, then we know the user has the right credentials
     if user.role == "user":
@@ -135,6 +142,7 @@ def operatorlogin():
         return redirect(url_for('auth.user_dashboard'))
     else:
         return render_template('operatorlogin.html')
+
 
 @auth.route('/operatorlogin', methods=['POST'])
 def operatorlogin_post():
@@ -153,16 +161,19 @@ def operatorlogin_post():
 
     if not user or not check_password_hash(user.password, password):
         flash('Please check your login details and try again.')
-        return redirect(url_for('auth.operatorlogin')) # if the user doesn't exist or password is wrong, reload the page
+        return redirect(
+            url_for('auth.operatorlogin'))  # if the user doesn't exist or password is wrong, reload the page
 
     if user.role == 'operator':
         # if the above check passes, then we know the user has the right credentials
         login_user(user, remember=remember)
         return redirect(url_for('auth.staff_dashboard'))
 
+
 @auth.route('/register')
 def register():
     return render_template('register.html')
+
 
 @auth.route('/register', methods=['POST'])
 def register_post():
@@ -170,9 +181,10 @@ def register_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
-    user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
+    user = User.query.filter_by(
+        email=email).first()  # if this returns a user, then the email already exists in database
 
-    if user: # if a user is found, we want to redirect back to register page so user can try again
+    if user:  # if a user is found, we want to redirect back to register page so user can try again
         flash('Email address already exists!')
         return redirect(url_for('auth.register'))
 
@@ -186,11 +198,13 @@ def register_post():
     flash('Registration successful, please log into your account in the fields below!')
     return redirect(url_for('auth.login'))
 
+
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.index'))
+
 
 @auth.route('/data')
 def data():
@@ -200,6 +214,7 @@ def data():
     response.content_type = 'application/json'
     return response
 
+
 def gen(camera):
     """Video streaming generator function."""
     while True:
@@ -207,11 +222,13 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+
 @auth.route('/video_feed', methods=['GET'])
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 @auth.route('/crowd-data', methods=['GET'])
 def crowd_data():
@@ -223,9 +240,11 @@ def crowd_data():
         train_status=status[2]
     )
 
+
 @auth.route('/oldindex')
 def test_feed():
     return render_template('OLD/video.html')
+
 
 application = create_app()
 
