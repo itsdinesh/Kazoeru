@@ -203,14 +203,13 @@ def register_post():
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/staff-settings')
-def staff_settings():
-    user = User.query.filter_by(id=current_user.id).first()
-    return render_template('staffsettings.html')
+@auth.route('/account-settings')
+def account_settings():
+    return render_template('accountsettings.html')
 
-@auth.route('/staff-settings-name', methods=['POST'])
+@auth.route('/account-settings-name', methods=['POST'])
 @login_required
-def staff_settings_name_post():
+def account_settings_name_post():
     user = User.query.filter_by(id=current_user.id).first()
     name = request.form.get('name')
     user.name = name
@@ -224,15 +223,15 @@ def staff_settings_name_post():
         flash('Staff\'s Name has been changed!')
         return redirect(url_for('auth.user_dashboard'))
 
-@auth.route('/staff-settings-email', methods=['POST'])
+@auth.route('/account-settings-email', methods=['POST'])
 @login_required
-def staff_settings_email_post():
+def account_settings_email_post():
     email = request.form.get('email')
     user = User.query.filter_by(email=email).first()
 
     if user:  # if a user is found, we want to redirect back to register page so user can try again
         flash('Email address already exists!')
-        return redirect(url_for('auth.staff_settings'))
+        return redirect(url_for('auth.account_settings'))
     else:
         current_user.email = email
         db.session.commit()
@@ -245,15 +244,15 @@ def staff_settings_email_post():
             flash('Staff\'s Email has been changed!')
             return redirect(url_for('auth.staff_dashboard'))
 
-@auth.route('/staff-settings-password', methods=['POST'])
-def staff_settings_post():
+@auth.route('/account-settings-password', methods=['POST'])
+def account_settings_post():
     old_password = request.form.get('old-password')
     new_password = request.form.get('password')
     user = User.query.filter_by(id=current_user.id).first()
 
     if not user or not check_password_hash(user.password, old_password):
         flash('Please check your login details and try again.')
-        return redirect(url_for('auth.staff_settings'))  # if the user doesn't exist or password is wrong, reload the page
+        return redirect(url_for('auth.account_settings'))  # if the user doesn't exist or password is wrong, reload the page
     else:
         user.password = password=generate_password_hash(new_password, method='sha256')
         db.session.commit()

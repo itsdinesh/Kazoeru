@@ -30,7 +30,7 @@
                             {% endif %}
                             {% endwith %}
 
-                           <form class="sign_frm" method="POST" action="/staff-settings-name">
+                           <form class="sign_frm" method="POST" action="/account-settings-name">
                                 <div class="form-group">
                                   <label for="">Name</label>
                                    <input type="text" name="name" class="form-control" value="{{ current_user.name }}" required>
@@ -38,7 +38,7 @@
                               <button type="submit_newname" class="btn btn_sign">Update Name</button>
                            </form>
                             <br>
-                            <form class="sign_frm" method="POST" action="/staff-settings-email">
+                            <form class="sign_frm" method="POST" action="/account-settings-email">
                                <div class="form-group">
                                   <label for="">Email Address</label>
                                    <input type="email" name="email" class="form-control" value="{{ current_user.email }}" required/>
@@ -46,7 +46,7 @@
                               <button type="submit_newemail" class="btn btn_sign">Update Email</button>
                            </form>
                            <br>
-                           <form class="sign_frm" method="POST" action="/staff-settings-password">
+                           <form class="sign_frm" method="POST" action="/account-settings-password">
                               <div class="form-group">
                                   <label for="">Old Password (8 characters minimum):</label>
                                   <label for="old-password-field"></label><input id="old-password-field" type="password" class="form-control" name="old-password" placeholder="Enter your Old Password" minlength="8" required>
