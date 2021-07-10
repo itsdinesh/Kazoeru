@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="{{ url_for('static', filename='assets-website/images/logo.png') }}" rel="shortcut icon" type="image/x-icon" />
+    <link href="../static/assets-website/images/logo.png" rel="shortcut icon" type="image/x-icon" />
   <link href="../static/assets-external/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../static/assets-external/css/fontawesome-all.css" rel="stylesheet" />
    <link rel="stylesheet" href="../static/assets-website/css/style-home.css">
@@ -20,16 +20,18 @@
             <i class="fas fa-bars" style="font-size: 175%;"></i></button>
         <div class="collapse navbar-collapse" id="navbar">
            <ul class="navbar-nav ml-auto">
-              <li class="nav-item mx-auto pt-2"><a class="nav-link text-center started-navbar" href="/register">Register</a></li>
-              <li class="nav-item text-none mx-auto pt-2"><a class="nav-link text-center text-none login-navbar" href="/login">Log In</a></li>
+              <li class="nav-item mx-auto pt-2">
+                  <a class="nav-link text-center started-navbar" href="/register">Register</a>
+              </li>
+              <li class="nav-item mx-auto pt-2">
+                  <a class="nav-link text-center text-none login-navbar" href="/login">Log In</a>
+              </li>
            </ul>
-           <!--  -->
         </div>
      </div>
   </nav>
   <!-- Navbar End --><!--    /////header content starts here////////////-->
   <hr><br>
-
   <section class="align-items-center" id="top-header">
      <div class="container">
         {% with messages = get_flashed_messages() %}

@@ -2,14 +2,14 @@
 <head><meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Staff Settings - Kazoeru</title>
+    <title>Account Settings - Kazoeru</title>
     <link href="../static/assets-website/images/logo.png" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="../static/assets-external/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../static/assets-website/css/style-entry.css">
     <link rel="stylesheet" href="../static/assets-website/css/responsive-entry.css">
 </head>
 
-<body>
+<body style="overflow:auto;">
     <section class="sign_up_sec">
        <div class="container-fluid">
            <div class="row">
@@ -18,8 +18,8 @@
                        <div class="col-lg-7 col-md-9">
                        <div class="sign_up_frm">
                         <a href="/"><img src="../static/assets-website/images/logo-banner.png" alt="logo" class="img-fluid"></a>
-                           <h4>Staff Settings</h4>
-                           <p>Change your staff settings here!</p>
+                           <h4>Account Settings</h4>
+                           <p>Change your account settings here!</p>
 
                             {% with messages = get_flashed_messages() %}
                             {% if messages %}
@@ -33,7 +33,7 @@
                            <form class="sign_frm" method="POST" action="/account-settings-name">
                                 <div class="form-group">
                                   <label for="">Name</label>
-                                   <input type="text" name="name" class="form-control" value="{{ current_user.name }}" required>
+                                   <input type="text" name="name" class="form-control" value="{{ current_user.name }}" placeholder="Enter your Name"  required>
                                </div>
                               <button type="submit_newname" class="btn btn_sign">Update Name</button>
                            </form>
@@ -41,7 +41,7 @@
                             <form class="sign_frm" method="POST" action="/account-settings-email">
                                <div class="form-group">
                                   <label for="">Email Address</label>
-                                   <input type="email" name="email" class="form-control" value="{{ current_user.email }}" required/>
+                                   <input type="email" name="email" class="form-control" value="{{ current_user.email }}" placeholder="Enter your Email"  required/>
                                </div>
                               <button type="submit_newemail" class="btn btn_sign">Update Email</button>
                            </form>
@@ -52,7 +52,7 @@
                                   <label for="old-password-field"></label><input id="old-password-field" type="password" class="form-control" name="old-password" placeholder="Enter your Old Password" minlength="8" required>
                                </div>
                                <div class="form-group">
-                                  <label for="">Password (8 characters minimum):</label>
+                                  <label for="">New Password (8 characters minimum):</label>
                                    <label for="password-field"></label><input id="password-field" type="password" class="form-control" name="password" placeholder="Enter your New Password" minlength="8" required>
                                </div>
                                <div class="form-group">
@@ -69,7 +69,7 @@
                         <a href="/">  <img src="../static/assets-website/images/logo.png" alt="logo" class="img-fluid"></a>
                        </div>
                        <div class="img_bdy">
-                           <img src="../static/assets-website/images/register-sidepic.jpg" alt="img" class="img-fluid">
+                           <img src="../static/assets-website/images/settings-sidepic.jpg" alt="img" class="img-fluid">
                        </div>
                    </div>
                </div>

@@ -176,7 +176,14 @@ def operatorlogin_post():
 
 @auth.route('/register')
 def register():
-    return render_template('register.html')
+    if current_user.is_authenticated and current_user.role == 'operator':
+        flash('Please log out from your account to create a new account!')
+        return redirect(url_for('auth.staff_dashboard'))
+    elif current_user.is_authenticated and current_user.role == 'user':
+        flash('Please log out from your account to create a new account!')
+        return redirect(url_for('auth.user_dashboard'))
+    else:
+        return render_template('register.html')
 
 
 @auth.route('/register', methods=['POST'])
@@ -199,11 +206,12 @@ def register_post():
     db.session.add(new_user)
     db.session.commit()
 
-    flash('Log into your newly registered account to continue!')
+    flash('Log into your newly registered account below to continue!')
     return redirect(url_for('auth.login'))
 
 
 @auth.route('/account-settings')
+@login_required
 def account_settings():
     return render_template('accountsettings.html')
 
@@ -273,6 +281,7 @@ def logout():
 
 
 @auth.route('/data')
+@login_required
 def data():
     status = Camera.get_crowd_count()
     graph_data = [(time.time() + 28800) * 1000, status[0]]
