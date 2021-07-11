@@ -66,7 +66,6 @@ body {
     border-radius: 3px;
     font-size: 20px;
     color: #4856DF;
-/*    width: 120px;*/
     border: 2px solid #FFFFFF;
     padding: 5px 25px !important;
 }
@@ -90,7 +89,7 @@ body {
 }
 
 .login-navbar:hover {
-    color: #FFFFFF;
+    color: #4856DF;
     border: 2px solid #FFFFFF;
     border-radius: 5px;
     font-size: 20px;
