@@ -25,7 +25,7 @@ class User(UserMixin, db.Model):
 def create_app():
     app = Flask(__name__)
     app.register_error_handler(404, page_not_found)
-
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['SECRET_KEY'] = 'kazoeru-is-the-secret-key'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
