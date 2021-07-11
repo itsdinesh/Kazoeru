@@ -1,7 +1,7 @@
 import json
 import time
 
-from flask import Blueprint, render_template, url_for, redirect, request, flash, make_response, Response, jsonify
+from flask import Blueprint, render_template, url_for, redirect, request, flash, make_response, Response, jsonify, Markup
 from flask_login import login_user, login_required, logout_user, current_user, LoginManager, UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
@@ -127,7 +127,7 @@ def login_post():
             url_for('auth.login'))  # if the user doesn't exist or password is wrong, reload the page
 
     elif user.role == "operator":
-        flash('Please use the staff login to log into your account.')
+        flash(Markup('Please use the <a href="/staff-login">staff login</a> to log into your account.'))
         return redirect(url_for('auth.login'))
 
     elif not user or not check_password_hash(user.password, password):
@@ -167,7 +167,7 @@ def operatorlogin_post():
             url_for('auth.operatorlogin'))  # if the user doesn't exist or password is wrong, reload the page
 
     elif user.role == "user":
-        flash('Please use the regular user login to log into your account.')
+        flash(Markup('Please use the <a href="/login">regular user login</a> to log into your account.'))
         return redirect(url_for('auth.operatorlogin'))
 
     elif user.email == email and check_password_hash(user.password, password) and user.role == 'operator':
