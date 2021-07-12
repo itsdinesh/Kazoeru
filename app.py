@@ -14,12 +14,12 @@ from people_counter import Camera
 db = SQLAlchemy()
 
 
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
-    email = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
-    name = db.Column(db.String)
-    role = db.Column(db.String, default="user")
+class Users(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(100), nullable=False)
+    role = db.Column(db.String(15), nullable=False, default="user")
 
 
 def create_app():
@@ -28,8 +28,11 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['SECRET_KEY'] = 'kazoeru-is-the-secret-key'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-
     db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+        db.session.commit()
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -38,7 +41,7 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         # since the user_id is just the primary key of our user table, use it in the query for the user
-        return User.query.get(int(user_id))
+        return Users.query.get(int(user_id))
 
     # blueprint for auth routes in our app
     from app import auth as auth_blueprint
@@ -117,7 +120,7 @@ def login_post():
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    user = User.query.filter_by(email=email).first()
+    user = Users.query.filter_by(email=email).first()
 
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
@@ -156,7 +159,7 @@ def operatorlogin_post():
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    user = User.query.filter_by(email=email).first()
+    user = Users.query.filter_by(email=email).first()
 
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
@@ -199,7 +202,7 @@ def register_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
-    user = User.query.filter_by(
+    user = Users.query.filter_by(
         email=email).first()  # if this returns a user, then the email already exists in database
 
     if user:  # if a user is found, we want to redirect back to register page so user can try again
@@ -207,7 +210,7 @@ def register_post():
         return redirect(url_for('auth.register'))
 
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+    new_user = Users(name=name, email=email, password=generate_password_hash(password, method='sha256'))
 
     # add the new user to the database
     db.session.add(new_user)
@@ -226,7 +229,7 @@ def account_settings():
 @auth.route('/account-settings-name', methods=['POST'])
 @login_required
 def account_settings_name_post():
-    user = User.query.filter_by(id=current_user.id).first()
+    user = Users.query.filter_by(id=current_user.id).first()
     name = request.form.get('name')
     user.name = name
     db.session.commit()
@@ -244,7 +247,7 @@ def account_settings_name_post():
 @login_required
 def account_settings_email_post():
     email = request.form.get('email')
-    user = User.query.filter_by(email=email).first()
+    user = Users.query.filter_by(email=email).first()
 
     if user:  # if a user is found, we want to redirect back to register page so user can try again
         flash('Email address already exists!')
@@ -266,7 +269,7 @@ def account_settings_email_post():
 def account_settings_post():
     old_password = request.form.get('old-password')
     new_password = request.form.get('password')
-    user = User.query.filter_by(id=current_user.id).first()
+    user = Users.query.filter_by(id=current_user.id).first()
 
     if not user or not check_password_hash(user.password, old_password):
         flash('Please check your login details and try again.')
