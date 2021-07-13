@@ -26,3 +26,6 @@ The system has been developed as my Final Year Project to obtain my degree in So
 * Scipy 1.6.3
 * Waitress 2.0.0
 * Werkzeug 1.0.1
+* Bootstrap 4.3.1
+* jQuery 1.12.4
+* Highcharts 9.1.2
