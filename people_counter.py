@@ -26,7 +26,7 @@ class Video(VideoThread):
         frameCount = 0
         frameRate = 10
         train_indicator = 0
-        train_duration = 8
+        train_duration = 5
         train_status = "N/A"
 
         if not cap.isOpened():
@@ -107,11 +107,11 @@ class Video(VideoThread):
                 cv2.putText(frame, crowd_status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
 
             # Train Status Indicator
-            if train_indicator == 0 or train_indicator > train_duration:
+            if train_indicator == 0 or train_indicator == train_duration:
                 train_status = "Train Departed"
                 cv2.putText(frame, train_status, (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
 
-            if 0 < train_indicator < train_duration:
+            elif train_indicator > 0 or train_indicator < train_duration:
                 train_status = "Train Arrived"
                 cv2.putText(frame, train_status, (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
 
