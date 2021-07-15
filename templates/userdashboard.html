@@ -1,15 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-        <link href="../static/assets-website/images/logo.png" rel="shortcut icon" type="image/x-icon" />
- <link href="../static/assets-external/css/bootstrap.min.css" rel="stylesheet" />
-      <link href="../static/assets-external/css/fontawesome-all.css" rel="stylesheet" />
-<title>User Dashboard - Kazoeru</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  <link href="../static/assets-website/images/logo.png" rel="shortcut icon" type="image/x-icon" />
+  <link href="../static/assets-external/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../static/assets-external/css/fontawesome-all.css" rel="stylesheet" />
+  <title>User Dashboard - Kazoeru</title>
 </head>
-  
+
 <body>
 	<nav class="navbar navbar-expand-lg py-1 px-4" style="background-color: #5267F7">
         <a class="navbar-brand" href="/">
@@ -24,20 +24,18 @@
             <div class="mb-2 text-white font-weight-bold text-center" style="margin: 10px; font-size:125%">
                   Welcome to User Dashboard, {{ name }} &nbsp; &nbsp;
             </div>
-
         <li class="py-1 mb-2">
-              <a class="btn btn-info btn-block" href="/account-settings" role="button">
-                  <i class="fa fa-cogs"></i> Settings
-              </a>
-		  </li>
-
-            <span style="padding-left: 10px"></span>
+          <a class="btn btn-info btn-block" href="/account-settings" role="button">
+              <i class="fa fa-cogs"></i> Settings
+          </a>
+        </li>
+        <span style="padding-left: 10px"></span>
 		  <li class="py-1 mb-2">
               <a class="btn btn-danger btn-block" href="/logout" role="button">
                   <i class="fa fa-sign-out-alt"></i> Log Out
               </a>
-          </li>
-        </ul>
+       </li>
+       </ul>
       </div>
     </nav>
 
@@ -53,52 +51,48 @@
         {% endwith %}
 
 		<div class="row">
-			  <!-- FIRST DASHBOARD OPTION PROJECT -->
 			<div class="col-sm-7">
 			  <div class="border border-dark rounded-lg p-3">
-                  <h3 class="h2 mb-3 font-weight-bold"><u>Train Station Crowd Status</u></h3>
-                <h4 class="h2 mb-3 font-weight-bold">LRT Pasar Seni</h4>
-                  <img src="../static/assets-website/images/pasar-seni.jpg" class="img-fluid"
-                      style="width:100%" alt="LRT Pasar Seni Generic Picture">
-                  <br><br>
-                    <h5>
-                        Number of People: <span id="crowd-data"></span><br>
-                        Crowd Status: <span id="crowd-status"></span><br>
-                        Train Status: <span id="train-status"></span>
-                    </h5>
-			  </div>
-                <br>
+          <h3 class="h2 mb-3 font-weight-bold"><u>Train Station Crowd Status</u></h3>
+          <h4 class="h2 mb-3 font-weight-bold">LRT Pasar Seni</h4>
+            <img src="../static/assets-website/images/pasar-seni.jpg" class="img-fluid"
+                style="width:100%" alt="LRT Pasar Seni Generic Picture">
+            <br><br>
+              <h5>
+                  Number of People: <span id="crowd-data"></span><br>
+                  Crowd Status: <span id="crowd-status"></span><br>
+                  Train Status: <span id="train-status"></span>
+              </h5>
+		         </div>
+              <br>
 			</div>
-			
-			<!-- SECOND DASHBOARD OPTION PROJECT -->
+
 			<div class="col-sm-5">
-                <div class="p-1">
-                    <h3 class="h2 mb-3 font-weight-bold"><u>Crowd Statistics</u></h3>
-                    <div class="container-fluid" id="data-container"></div>
-                </div>
+        <div class="p-1">
+            <h3 class="h2 mb-3 font-weight-bold"><u>Crowd Statistics</u></h3>
+            <div class="container-fluid" id="data-container"></div>
+        </div>
 			</div>
 		</div>
 	  </div>
 	</section>
 
-	<!-- FOOTER -->
 	<footer class="text-light py-3" style="background-color: #5267F7; margin-top: 20px">
 	  <div class="container">
-		<p class="mb-0 font-weight-bold text-center">
-			Developed with <span style=color:#ff0000;">&nbsp;&hearts;&nbsp;</span> by Dinesh A/L S.Raju for University Final Year Project &copy; 2021
-		</p>
+      <p class="mb-0 font-weight-bold text-center">
+        Developed with <span style=color:#ff0000>&nbsp;&hearts;&nbsp;</span> by Dinesh A/L S.Raju<br>University Final Year Project &copy; 2021
+      </p>
 	  </div>
 	</footer>
-  </body>
+</body>
 
+<script src="../static/assets-external/js/highcharts.js"></script>
+<script src="../static/assets-external/js/highcharts-exporting.js"></script>
+<script src="../static/assets-website/js/flasktochart.js"></script>
 <script src="../static/assets-external/js/jquery.min.js"></script>
 <script src="../static/assets-external/js/bootstrap.min.js">
      new WOW().init();
 </script>
-<script src="../static/assets-external/js/highcharts.js"></script>
-<script src="../static/assets-external/js/highcharts-exporting.js"></script>
-<script src="../static/assets-website/js/flasktochart.js"></script>
-
 <script type="text/javascript">
     const intervalID = setInterval(update_values, 3000);
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
@@ -112,5 +106,4 @@
             })
     }
 </script>
-
 </html>

@@ -234,19 +234,6 @@ h2 {
     background-color: #5267F7;
 }
 
-.buy-now {
-    background: #5267F7 0 0 no-repeat padding-box;
-    border-radius: 14px;
-    color: #FFFFFF;
-    width: 240px;
-}
-
-.card-sale {
-    position: absolute;
-    top: -56px;
-    bottom: 0;
-}
-
 .font-large {
     font-size: 80px;
 }
@@ -301,10 +288,6 @@ sub {
 
     .white-card {
         width: 100%;
-    }
-
-    .card-sale {
-        top: -25px;
     }
 }
 
@@ -367,8 +350,8 @@ sub {
   ::-webkit-scrollbar-thumb {
     background: #5267F7;
   }
-  
+
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #364de2; 
+    background: #364de2;
   }

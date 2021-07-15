@@ -109,12 +109,12 @@ def login_post():
     password = request.form.get('password')
     user = Users.query.filter_by(email=email).first()
 
-    # check if the user actually exists
-    # take the user-supplied password, hash it, and compare it to the hashed password in the database
+    # Check if the user actually exists
+    # Take the user-supplied password, hash it, and compare it to the hashed password in the database
     if user is None:
         flash('An user account does not exist in this email.')
         return redirect(
-            url_for('auth.login'))  # if the user doesn't exist or password is wrong, reload the page
+            url_for('auth.login'))  # If the user doesn't exist or password is wrong, reload the page
 
     elif user.role == "operator":
         flash(Markup('Please use the <a href="/staff-login">staff login</a> to log into your account.'))
@@ -124,7 +124,7 @@ def login_post():
         flash('Please check your login details and try again.')
         return redirect(url_for('auth.login'))  # if the user doesn't exist or password is wrong, reload the page
 
-    # if the check pass, then we know the user has the right credentials
+    # if the check pass, then the user has the right credentials
     elif user.role == "user":
         login_user(user)
         return redirect(url_for('auth.user_dashboard'))
@@ -158,26 +158,26 @@ def operatorlogin_post():
     password = request.form.get('password')
     user = Users.query.filter_by(email=email).first()
 
-    # check if the user actually exists
-    # take the user-supplied password, hash it, and compare it to the hashed password in the database
+    # check if the staff actually exists
+    # take the staff-supplied password, hash it, and compare it to the hashed password in the database
     if user is None:
         flash('An user account does not exist in this email.')
         return redirect(
-            url_for('auth.operatorlogin'))  # if the user doesn't exist or password is wrong, reload the page
+            url_for('auth.operatorlogin'))  # if the staff doesn't exist or password is wrong, reload the page
 
     elif user.role == "user":
         flash(Markup('Please use the <a href="/login">regular user login</a> to log into your account.'))
         return redirect(url_for('auth.operatorlogin'))
 
     elif user.email == email and check_password_hash(user.password, password) and user.role == 'operator':
-        # if the above check passes, then we know the user has the right credentials
+        # if the above check passes, then the staff has the right credentials
         login_user(user)
         return redirect(url_for('auth.staff_dashboard'))
 
     elif not user or not check_password_hash(user.password, password) or user is None:
         flash('Please check your login details and try again.')
         return redirect(
-            url_for('auth.operatorlogin'))  # if the user doesn't exist or password is wrong, reload the page
+            url_for('auth.operatorlogin'))  # if the staff doesn't exist or password is wrong, reload the page
 
 
 # Route for the staff dashboard
@@ -320,7 +320,7 @@ def gen(video):
 @login_required
 @requires_roles('operator')
 def video_feed():
-    """Video streaming route. Put this in the src attribute of an img tag."""
+    # Return video frames as images
     return Response(gen(Video()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 

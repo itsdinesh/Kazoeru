@@ -12,11 +12,12 @@ function requestData()
         // add the point
         chart.series[0].addPoint(result, true, shift);
 
-        // call it again after one second
+        // call it again after three second
         setTimeout(requestData, 3000);
     });
 }
 
+// Define Highcharts Chart
 $(document).ready(function() {
     chart = new Highcharts.Chart({
         chart: {

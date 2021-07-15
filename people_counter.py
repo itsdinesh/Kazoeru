@@ -50,7 +50,7 @@ class Video(VideoThread):
             # Slice frames
             (H, W) = frame.shape[:2]
             # Input frame into DNN with the frame, scale factor and size.
-            blob = cv2.dnn.blobFromImage(frame, 0.01, (W, H))
+            blob = cv2.dnn.blobFromImage(frame, 0.007843, (W, H))
             detector.setInput(blob)
             person_detections = detector.forward()
             rects = []
@@ -106,6 +106,7 @@ class Video(VideoThread):
                 crowd_status = "Not Crowded"
                 cv2.putText(frame, crowd_status, (5, 90), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 128, 0), 2)
 
+            # Train Status Indicator
             if train_indicator == 0 or train_indicator > train_duration:
                 train_status = "Train Departed"
                 cv2.putText(frame, train_status, (5, 120), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 2)
