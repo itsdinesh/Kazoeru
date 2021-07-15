@@ -14,7 +14,7 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
            "sofa", "train", "tvmonitor"]
 
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
-tracker = CentroidTracker()
+tracker = CentroidTracker(max_disappeared=10)
 input_video = "./vid/LRT Pasar Seni.mkv"
 status = [0, 0, 0]
 

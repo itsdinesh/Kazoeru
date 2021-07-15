@@ -86,13 +86,14 @@
 	</footer>
 </body>
 
-<script src="../static/assets-external/js/highcharts.js"></script>
-<script src="../static/assets-external/js/highcharts-exporting.js"></script>
-<script src="../static/assets-website/js/flasktochart.js"></script>
 <script src="../static/assets-external/js/jquery.min.js"></script>
 <script src="../static/assets-external/js/bootstrap.min.js">
      new WOW().init();
 </script>
+<script src="../static/assets-external/js/highcharts.js"></script>
+<script src="../static/assets-external/js/highcharts-exporting.js"></script>
+<script src="../static/assets-website/js/flasktochart.js"></script>
+
 <script type="text/javascript">
     const intervalID = setInterval(update_values, 3000);
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
@@ -106,4 +107,5 @@
             })
     }
 </script>
+
 </html>

@@ -17,7 +17,7 @@ function requestData()
     });
 }
 
-// Define Highcharts Chart
+// Define HighCharts Settings
 $(document).ready(function() {
     chart = new Highcharts.Chart({
         chart: {
