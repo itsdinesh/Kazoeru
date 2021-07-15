@@ -3,7 +3,7 @@ A crowd counting system for train stations in Malaysia.
 The system has been developed as my Final Year Project to obtain my degree in Software Engineering.
 
 # Demonstration Video of the System
-[![Demonstration Video](https://img.youtube.com/vi/r3inAqmxZ0A/0.jpg)](https://www.youtube.com/watch?v=r3inAqmxZ0A)
+https://www.youtube.com/watch?v=r3inAqmxZ0A
 
 # Requirements
 * Python 3.8.7
