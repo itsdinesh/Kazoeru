@@ -1,6 +1,6 @@
 # Kazoeru
 A crowd counting system for train stations in Malaysia.
-The system has been developed as my Final Year Project to obtain my degree in Software Engineering.
+The system has been developed for my Final Year Project in order to obtain my degree in Software Engineering.
 
 # Demonstration Video of the System
 https://www.youtube.com/watch?v=r3inAqmxZ0A

@@ -8,10 +8,9 @@ protopath = "models/MobileNetSSD_deploy.prototxt"
 modelpath = "models/MobileNetSSD_deploy.caffemodel"
 net = cv2.dnn.readNetFromCaffe(protopath, modelpath)
 
-CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
-           "bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
-           "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
-           "sofa", "train", "tvmonitor"]
+CLASSES = ["background", "person", "train", "aeroplane", "bicycle", "bird", "boat",
+           "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse",
+           "motorbike", "pottedplant", "sheep", "sofa", "tvmonitor"]
 
 detector = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
 tracker = CentroidTracker(max_disappeared=10)
@@ -26,7 +25,7 @@ class Video(VideoThread):
         frameCount = 0
         frameRate = 10
         train_indicator = 0
-        train_duration = 5
+        train_duration = 164
         train_status = "N/A"
 
         if not cap.isOpened():
@@ -58,11 +57,13 @@ class Video(VideoThread):
             # Confidence Level Tracking
             for i in np.arange(0, person_detections.shape[2]):
                 confidence = person_detections[0, 0, i, 2]
-                if confidence > 0.75:
+                if confidence > 0.5:
                     idx = int(person_detections[0, 0, i, 1])
 
                     if CLASSES[idx] == "train":
                         train_indicator += 1  # Train has been detected
+                        label = "{}: {:.2f}%".format(CLASSES[idx], confidence * 100)
+                        cv2.putText(frame, label, (500, 300), cv2.FONT_HERSHEY_PLAIN, 1.5, (255, 255, 0), 2)
 
                     if CLASSES[idx] != "person":
                         continue
