@@ -11,5 +11,5 @@ numpy==1.20.3
 opencv-python-headless==4.5.2.54
 scipy==1.6.3
 SQLAlchemy==1.4.12
-waitress==2.0.0
+waitress==2.1.1
 Werkzeug==1.0.1
