@@ -19,9 +19,9 @@ https://www.youtube.com/watch?v=r3inAqmxZ0A
 * itsdangerous 2.0.1
 * Jinja2 2.11.3
 * MarkupSafe 1.1.1
-* Numpy 1.20.3
+* Numpy 1.22.0
 * Scipy 1.6.3
-* Waitress 2.0.0
+* Waitress 2.1.1
 * Werkzeug 1.0.1
 * Bootstrap 4.3.1
 * jQuery 1.12.4
