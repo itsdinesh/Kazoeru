@@ -7,7 +7,7 @@ imutils==0.5.4
 itsdangerous==2.0.1
 Jinja2==2.11.3
 MarkupSafe==1.1.1
-numpy==1.22.0
+numpy
 opencv-python-headless==4.5.2.54
 scipy==1.10.0
 SQLAlchemy==1.4.12
