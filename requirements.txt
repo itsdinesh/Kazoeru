@@ -9,7 +9,7 @@ Jinja2==2.11.3
 MarkupSafe==1.1.1
 numpy
 opencv-python-headless==4.5.2.54
-scipy==1.10.0
+scipy
 SQLAlchemy==1.4.12
 waitress==2.1.2
 Werkzeug==2.2.3
