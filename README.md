@@ -8,7 +8,7 @@ https://www.youtube.com/watch?v=r3inAqmxZ0A
 # Requirements
 * Python 3.8.7
 * OpenCV Python Headless 4.5.2.54
-* Flask 1.12
+* Flask 2.25
 * Flask-Login 0.5.0
 * SQLAlchemy 1.4.12
 * Flask-SQLAlchemy 2.5.1
@@ -19,10 +19,10 @@ https://www.youtube.com/watch?v=r3inAqmxZ0A
 * itsdangerous 2.0.1
 * Jinja2 2.11.3
 * MarkupSafe 1.1.1
-* Numpy 1.22.0
-* Scipy 1.6.3
+* Numpy
+* Scipy
 * Waitress 2.1.2
-* Werkzeug 1.0.1
+* Werkzeug 2.2.3
 * Bootstrap 4.3.1
 * jQuery 1.12.4
 * Highcharts 9.1.2
